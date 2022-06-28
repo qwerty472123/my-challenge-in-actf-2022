@@ -1,0 +1,995 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Barreto-Naehrig Curves</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Requirements Terminology"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Preliminaries"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Elliptic Curve"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Bilinear Map"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Domain Parameter Specification"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Notation for Domain Parameters and Types of Sextic Twists"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Efficient Domain Parameters for 254-Bit-Curves "/>
+<link href="#rfc.section.4.2.1" rel="Chapter" title="4.2.1 Domain Parameters by Beuchat et al."/>
+<link href="#rfc.section.4.2.2" rel="Chapter" title="4.2.2 Domain Parameters by Aranha et al."/>
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Domain Parameters Based on ISO Document"/>
+<link href="#rfc.section.4.3.1" rel="Chapter" title="4.3.1 Domain Parameters for 224-Bit Curves"/>
+<link href="#rfc.section.4.3.2" rel="Chapter" title="4.3.2 Domain Parameters for 256-Bit Curves"/>
+<link href="#rfc.section.4.3.3" rel="Chapter" title="4.3.3 Domain Parameters for 384-Bit Curves"/>
+<link href="#rfc.section.4.3.4" rel="Chapter" title="4.3.4 Domain Parameters for 512-Bit Curves"/>
+<link href="#rfc.section.4.3.5" rel="Chapter" title="4.3.5 Differences between D-Type and M-Type on ISO parameters"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Object Identifiers"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgements"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 Change log"/>
+<link href="#rfc.references" rel="Chapter" title="9 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="9.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="9.2 Informative References"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+<meta name="viewport" content="width=600;" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Kasamatsu, K., Kanno, S., Kobayashi, T., and Y. Kawahara" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-kasamatsu-bncurves-01" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-2-10" />
+  <meta name="dct.abstract" content="Elliptic curves with pairings are useful tools for constructing cryptographic primitives.  In this memo, we specify domain parameters of Barreto-Naehrig curves (BN-curves) " />
+  <meta name="description" content="Elliptic curves with pairings are useful tools for constructing cryptographic primitives.  In this memo, we specify domain parameters of Barreto-Naehrig curves (BN-curves) " />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Network Working Group</td>
+  <td class="right">K. Kasamatsu</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">S. Kanno</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Informational</td>
+  <td class="right">NTT Software Corporation</td>
+</tr>
+<tr>
+  <td class="left">Expires: August 14, 2014</td>
+  <td class="right">T. Kobayashi</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">Y. Kawahara</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">NTT</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">February 10, 2014</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Barreto-Naehrig Curves<br />
+  <span class="filename">draft-kasamatsu-bncurves-01</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>Elliptic curves with pairings are useful tools for constructing cryptographic primitives.  In this memo, we specify domain parameters of Barreto-Naehrig curves (BN-curves) <a href="#BN2006">[5]</a>. The BN-curve is an elliptic curve suitable for pairings and allows us to achieve high security and efficiency of cryptographic schemes.  This memo specifies domain parameters of two 254-bit BN-curves <a href="#BGMORT2010">[1]</a> <a href="#AKLGL2011">[2]</a> which allow us to obtain efficient implementations and domain parameters of 224, 256, 384, and 512-bit BN-curves which are compliant with ISO/IEC 15946-5<a href="#ISO15946-5">[3]</a>.  Furthermore, this memo organizes differences between types of elliptic curves specified in ISO document and often used in open source software, which are called M-type and D-type, respectively<a href="#Aranha13">[21]</a>.  </p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on August 14, 2014.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2014 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<li>2.   <a href="#rfc.section.2">Requirements Terminology</a></li>
+<li>3.   <a href="#rfc.section.3">Preliminaries</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">Elliptic Curve</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Bilinear Map</a></li>
+<li>4.   <a href="#rfc.section.4">Domain Parameter Specification</a></li>
+<li>4.1.   <a href="#rfc.section.4.1">Notation for Domain Parameters and Types of Sextic Twists</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">Efficient Domain Parameters for 254-Bit-Curves </a></li>
+<li>4.2.1.   <a href="#rfc.section.4.2.1">Domain Parameters by Beuchat et al.</a></li>
+<li>4.2.2.   <a href="#rfc.section.4.2.2">Domain Parameters by Aranha et al.</a></li>
+<li>4.3.   <a href="#rfc.section.4.3">Domain Parameters Based on ISO Document</a></li>
+<li>4.3.1.   <a href="#rfc.section.4.3.1">Domain Parameters for 224-Bit Curves</a></li>
+<li>4.3.2.   <a href="#rfc.section.4.3.2">Domain Parameters for 256-Bit Curves</a></li>
+<li>4.3.3.   <a href="#rfc.section.4.3.3">Domain Parameters for 384-Bit Curves</a></li>
+<li>4.3.4.   <a href="#rfc.section.4.3.4">Domain Parameters for 512-Bit Curves</a></li>
+<li>4.3.5.   <a href="#rfc.section.4.3.5">Differences between D-Type and M-Type on ISO parameters</a></li>
+<li>5.   <a href="#rfc.section.5">Object Identifiers</a></li>
+<li>6.   <a href="#rfc.section.6">Security Considerations</a></li>
+<li>7.   <a href="#rfc.section.7">Acknowledgements</a></li>
+<li>8.   <a href="#rfc.section.8">Change log</a></li>
+<li>9.   <a href="#rfc.references">References</a></li>
+<li>9.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>9.2.   <a href="#rfc.references.2">Informative References</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
+<p id="rfc.section.1.p.1">Elliptic curves with a special map called a pairing or bilinear map allow cryptographic primitives to achieve functions or efficiency which cannot be realized by conventional mathematical tools.  There are identity-based encryption (IBE), attribute-based encryption (ABE), ZSS signature, broadcast encryption (BE) as examples of such primitives. IBE realizes powerful management of public keys by allowing us to use a trusted identifier as a public key.  ABE provides a rich decryption condition based on boolean functions and attributes corresponding to a secret key or a ciphertext.  The ZSS signature gives a shorter size of signature than that of ECDSA. BE provides an efficient encryption procedure in a broadcast setting.</p>
+<p id="rfc.section.1.p.2">Some of these cryptographic schemes based on elliptic curves with pairings were proposed in the IETF (e.g. <a href="#RFC5091">[6]</a>, <a href="#RFC6508">[7]</a>, and <a href="#I-D.draft-irtf-cfrg-zss">[8]</a>) and used in some protocols (e.g. <a href="#RFC5409">[9]</a>, <a href="#RFC6267">[10]</a>, <a href="#RFC6507">[11]</a>, <a href="#RFC6509">[12]</a>, and <a href="#RFC6539">[13]</a>).  These cryptographic primitives will be used actively more in the IETF due to their functions or efficiency.</p>
+<p id="rfc.section.1.p.3">We need to choose an appropriate type of elliptic curve and parameters for the pairing-based cryptographic schemes, because the choice has great impact on security and efficiency of these schemes.  However, an RFC on elliptic curves with pairings has not yet been provided in the IETF.</p>
+<p id="rfc.section.1.p.4">In this memo, we specify domain parameters of Barreto-Naehrig curve (BN-curve) <a href="#BN2006">[5]</a>. The BN-curve allows us to achieve high security and efficiency with pairings due to an optimum embedding degree.  This memo specifies domain parameters of two 254-bit BN-curves (<a href="#BGMORT2010">[1]</a> and <a href="#AKLGL2011">[2]</a>) because of these efficiencies.  These BN-curves are known as efficient curves in academia and particularly provide efficient pairing computation which is generally slowest operation in pairing-based cryptography.  There are optimized source codes of (<a href="#BGMORT2010">[1]</a> and <a href="#AKLGL2011">[2]</a>) as open source software (<a href="#TEPLA">[19]</a> and <a href="#relic">[20]</a>), respectively.  Furthermore, this memo specifies domain parameters of 224, 256, 384, and 512-bit curves which are compliant with ISO document <a href="#ISO15946-5">[3]</a> and organizes differences between types of elliptic curves specified in ISO document and used in open source software, which are called M-type and D-type respectively <a href="#Aranha13">[21]</a>.  </p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> Requirements Terminology</h1>
+<p id="rfc.section.2.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this memo are to be interpreted as described in <a href="#RFC2119">[4]</a>. </p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#preliminaries" id="preliminaries">Preliminaries</a></h1>
+<p id="rfc.section.3.p.1">In this section, we introduce the definition of elliptic curve and bilinear map, notation used in this memo.</p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> <a href="#curve" id="curve">Elliptic Curve</a></h1>
+<p id="rfc.section.3.1.p.1">Throughout this memo, let p &gt; 3 be a prime and F_p be a finite field.  The curve defined by the following equation E is called an elliptic curve.</p>
+<pre>E : y^2 = x^3 + A*x + B such that A, B are in F_p, 
+	    4 * A^3 + 27 * B^2 != 0 mod p</pre>
+<p id="rfc.section.3.1.p.2">Solutions (x,y) for an elliptic curve E, as well as the point at infinity, are called F_p-rational points.  The additive group is constructed by a well-defined operation in the set of F_p-rational points.  Typically, the cyclic additive group with prime order q and base point G in E(F_p) is used for the cryptographic applications.  Furthermore, we define terminology used in this memo as follows.</p>
+<p/>
+
+<ul class="empty">
+  <li>O_E: the point at infinity over elliptic curve E.</li>
+  <li>#E(F_p): number of points on an elliptic curve E over F_p.</li>
+  <li>cofactor h: h =  #E(F_p)/q.</li>
+  <li>embedding degree k: minimum integer k such that r is a divisor of q^k - 1 and r^2 is not a divisor of q^k - 1</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> <a href="#pairing" id="pairing">Bilinear Map</a></h1>
+<p id="rfc.section.3.2.p.1">Let G_1 be an additive group of prime order p and let G_2 and G_T be additive and multiplicative groups, respectively,  of the same order.  Let P, Q be generators of G_1, G_2 respectively.  We say that (G_1, G_2, G_T) are asymmetric bilinear map groups if there exists a bilinear map e: (G_1, G_2) -&gt; G_T satisfying the following properties: </p>
+<p/>
+
+<ol>
+  <li>Bilinearity: for any S in G_1, for any T in G_2, for any a, b in Z_q, we have the relation e(aS, bT) = e(S,T)^{ab}.</li>
+  <li>Non-degeneracy: for any S in G_1, e(S,T) = 1 for any T in G_2 only if S = O_E.</li>
+  <li>Computability: for any S in G_1, for any T in G_2, the bilinear map is efficiently computable.</li>
+  <li>There exists an efficient, publicly computable isomorphism I: G_2 -&gt; G_1 such that I(Q) = P.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.3.2.p.3">For BN-curves, G_1 is a q-order cyclic subgroup of E(F_p) and  G_2 is a subgroup of E(F_{p^k}), where k is the embedding degree of the curve. The group G_T is the set of q-th roots of unity in the finite field F_{p^k}.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#domain-parameter" id="domain-parameter">Domain Parameter Specification</a></h1>
+<p id="rfc.section.4.p.1">In this section, this memo specifies the domain parameters for two 254-bit elliptic curves which allow us to efficiently compute the operation of a pairing at high levels of security and domain parameters for 224, 256, 384, and 512-bit elliptic curves which are compliant with the ISO document <a href="#ISO15946-5">[3]</a>. </p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> <a href="#notations" id="notations">Notation for Domain Parameters and Types of Sextic Twists</a></h1>
+<p id="rfc.section.4.1.p.1">Here, we define notations for specifying domain parameters and explain types of pairing friendly curves.</p>
+<p id="rfc.section.4.1.p.2">Domain parameters of the elliptic curve E(F_p) and E(F_{p^12}) are needed for computation of the pairing.  Barreto and Naehrig proposed a method of point and pairing compression by using output of a map I from a sextic twist E'(F_{p^2}) to E(F_{p^12}) instead of E(F_{p^12}). Generally, this method is used with BN-curves.  Hence, this memo follows the method. For the details of the method, refer to <a href="#BN2006">[5]</a>.</p>
+<p id="rfc.section.4.1.p.3">The pairing friendly curves are classified in two types, which are called D-type and M-type respectively <a href="#Aranha13">[21]</a>.  The D-type sextic twist curve is defined by equation y'^2 = x'^3 + b/s when elliptic curve E(F_p) is set to be y^2 = x^3 + b and represent of F_{p^12} is set to be F_{p^2}[u]/(u^6 - s), where s is in F_{p^2}^*.  Let z be a root of u^6 - s, where z is in F_{p^12}. The corresponding map I: E'(F_{p^2}) -&gt; E(F_{p^12}) is (x', y') -&gt; (z^2 * x', z^3 * y').  </p>
+<p id="rfc.section.4.1.p.4">The M-type sextic twist curve is defined by equation y'^2 = x'^3 + b * s when elliptic curve E(F_p) is set to be y^2 = x^3 + b and represent of F_{p^12} is set to be F_{p^2}[u]/(u^6 - s), where s is in F_{p^2}^*.  The corresponding map I: E'(F_{p^2}) -&gt; E(F_{p^12}) is (x', y') -&gt; (x' * s^{-1} * z^4, y' * s^{-1} * z^3), with z^6 = s. </p>
+<p id="rfc.section.4.1.p.5">These domain parameters are described in the following way.</p>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID is an identifier with which the curve can be referenced.</li>
+  <li>p_b is a prime specifying base field.</li>
+  <li>p_e is an irreducible polynomial specifying extension field.</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.4.1.p.7">For elliptic curve E</p>
+<p/>
+
+<ul class="empty">
+  <li>A and B are the coefficients of the equation y^2 = x^3 + A * x + B mod p defining E.</li>
+  <li>G = (x,y) is the base point, i.e., a point with x and y being its x- and y-coordinates in E, respectively.</li>
+  <li>q is the prime order of the group generated by G.</li>
+  <li>h is the cofactor of G in E</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.4.1.p.9">For twisted curve E'</p>
+<p/>
+
+<ul class="empty">
+  <li>A' and B' are the coefficients of the equation y^2 = x^3 + A' * x + B' mod p defining E'.</li>
+  <li>G' = (x',y') is the base point, i.e., a point with x' and y' being its x'- and y'-coordinates in E', respectively.</li>
+  <li>q' is the prime order of the group generated by G'.</li>
+  <li>h' is the cofactor of G' in E'</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> <a href="#curve254" id="curve254">Efficient Domain Parameters for 254-Bit-Curves </a></h1>
+<p id="rfc.section.4.2.p.1">In this section, this memo specifies the domain parameters for two 254-bit elliptic curves which are more efficient than parameters of ISO document with D-type.  </p>
+<h1 id="rfc.section.4.2.1"><a href="#rfc.section.4.2.1">4.2.1.</a> <a href="#curve254a" id="curve254a">Domain Parameters by Beuchat et al.</a></h1>
+<p id="rfc.section.4.2.1.p.1">Here, we describe the domain parameters for 254-bit elliptic curve<a href="#BGMORT2010">[1]</a> with D-type.</p>
+<p id="rfc.section.4.2.1.p.2">The domain parameters described in this subsection are defined by elliptic curve E(F_p) : y^2 = x^3 + 5 and sextic twist E'(F_{p^2}) : x'^3 + 5/s = x'^3 - u, where F_{p^2} = F_{p}[u]/(u^2 + 5), F_{p^6} = F_{p^2}[v]/(v^3 - u), F_{p^12} = F_{p^6}[w]/(w^2 - v), s = - 5/u. We describe domain parameters of elliptic curves E and E'.  For the details of these parameters, refer to <a href="#BGMORT2010">[1]</a>.  </p>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp254BNa</li>
+  <li>p_b = 0x2370fb049d410fbe4e761a9886e502417d023f40180000017e80600000 000001</li>
+  <li>A = 0</li>
+  <li>B = 5</li>
+  <li>x = 1</li>
+  <li>y = 0xd45589b158faaf6ab0e4ad38d998e9982e7ff63964ee1460342a592677cc cb0</li>
+  <li>q = 0x2370fb049d410fbe4e761a9886e502411dc1af70120000017e8060000000 0001</li>
+  <li>h = 1</li>
+</ul>
+
+<p> </p>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp254n2BNa</li>
+  <li>p_b = 0x2370fb049d410fbe4e761a9886e502417d023f40180000017e80600000 000001</li>
+  <li>p_e = u^2 + 5 over p_b</li>
+  <li>A' = 0</li>
+  <li>B' = - u</li>
+  <li>x' = 0x19b0bea4afe4c330da93cc3533da38a9f430b471c6f8a536e81962ed967 909b5 + (0xa1cf585585a61c6e9880b1f2a5c539f7d906fff238fa6341e1de1a2 e45c3f72) u</li>
+  <li>y' = 0x17abd366ebbd65333e49c711a80a0cf6d24adf1b9b3990eedcc91731384 d2627 + (0x0ee97d6de9902a27d00e952232a78700863bc9aa9be960C32f5bf9fd 0a32d345) u</li>
+  <li>q' = 0x2370fb049d410fbe4e761a9886e502411dc1af70120000017e806000000 00001</li>
+  <li>h' = 0x2370fb049d410fbe4e761a9886e50241dc42cf101e0000017e806000000 00001</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.2.2"><a href="#rfc.section.4.2.2">4.2.2.</a> <a href="#curve254b" id="curve254b">Domain Parameters by Aranha et al.</a></h1>
+<p id="rfc.section.4.2.2.p.1">Here, we describe the domain parameters for 254-bit elliptic curve <a href="#AKLGL2011">[2]</a> with D-type.</p>
+<p id="rfc.section.4.2.2.p.2">The domain parameters described in this subsection are defined by elliptic curve E(F_p) : y^2 = x^3 + 2 and sextic twist E'(F_{p^2}) : x'^3 + 2/s = x'^3 + 1 - u, where ,F_{p^2} = F_p [u]/(u^2 + 1), F_{p^6} = F_{p^2} [v]/(v^3 - (1+u)), F_{p^12} = F_{p^6} [w]/(w^2 - v), 1/s = 1/(1 + u). We describes domain parameters of elliptic curves E and E'.  For the details of these parameters, refer to <a href="#AKLGL2011">[2]</a>.  </p>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp254BNb</li>
+  <li>p_b = 0x2523648240000001ba344d80000000086121000000000013a700000000 000013</li>
+  <li>A = 0</li>
+  <li>B = 2</li>
+  <li>x = 0x2523648240000001ba344d80000000086121000000000013a70000000000 0012</li>
+  <li>y = 1</li>
+  <li>q = 0x2523648240000001ba344d8000000007ff9f800000000010a10000000000 000d</li>
+  <li>h = 1</li>
+</ul>
+
+<p> </p>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp254n2BNb</li>
+  <li>p_b = 0x2523648240000001ba344d80000000086121000000000013a700000000 000013</li>
+  <li>p_e = u^2 + 1 over p_b</li>
+  <li>A' = 0</li>
+  <li>B' = 1 + (0x2523648240000001ba344d80000000086121000000000013a70000 0000000012) u</li>
+  <li>x' = 0x061a10bb519eb62feb8d8c7e8c61edb6a4648bbb4898bf0d91ee4224c80 3fb2b +(0x0516aaf9ba737833310aa78c5982aa5b1f4d746bae3784b70d8c34c1 e7d54cf3)u </li>
+  <li>y' = 0x021897a06baf93439a90e096698c822329bd0ae6bdbe09bd19f0e07891c d2b9a + (0x0ebb2b0e7c8b15268f6d4456f5f38d37b09006ffd739c9578a2d1ae c6b3ace9b) u</li>
+  <li>q' = 0x2523648240000001ba344d8000000007ff9f800000000010a1000000000 0000d</li>
+  <li>h' = 0x2523648240000001ba344d8000000008c2a2800000000016ad000000000 00019</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> <a href="#various-level" id="various-level">Domain Parameters Based on ISO Document</a></h1>
+<p id="rfc.section.4.3.p.1">Here, we describe the domain parameters for 224, 256, 384, and 512-bit elliptic curves which are compliant with the ISO document and are based on M-type.  The domain parameters described in below subsections are defined by Elliptic curve E(F_p): y^2 = x^3 + 3 and sextic twist E'(F_{p^2}): y'^2 = x'^3 + 3 * s, where F_{p^2} = F_p[X]/(X^2 + 1), F_{p^12} = F_{p^2}[X]/(X^6 - s), s = 1 + X. We describe domain parameters of elliptic curves E.  Detailed information on these domain parameters is given in <a href="#ISO15946-5">[3]</a>.</p>
+<h1 id="rfc.section.4.3.1"><a href="#rfc.section.4.3.1">4.3.1.</a> <a href="#curve224" id="curve224">Domain Parameters for 224-Bit Curves</a></h1>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp224BN</li>
+  <li>p_b = 0xfffffffffff107288ec29e602c4520db42180823bb907d1287127833</li>
+  <li>A = 0</li>
+  <li>B = 3</li>
+  <li>x = 1</li>
+  <li>y = 2</li>
+  <li>q = 0xfffffffffff107288ec29e602c4420db4218082b36c2accff76c58ed</li>
+  <li>h = 1</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.3.2"><a href="#rfc.section.4.3.2">4.3.2.</a> <a href="#curve256" id="curve256">Domain Parameters for 256-Bit Curves</a></h1>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp256BN</li>
+  <li>p_b = 0xfffffffffffcf0cd46e5f25eee71a49f0cdc65fb12980a82d3292ddbae d33013</li>
+  <li>A = 0</li>
+  <li>B = 3</li>
+  <li>x = 1</li>
+  <li>y = 2</li>
+  <li>q = 0xfffffffffffcf0cd46e5f25eee71a49e0cdc65fb1299921af62d536cd10b 500d</li>
+  <li>h = 1</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.3.3"><a href="#rfc.section.4.3.3">4.3.3.</a> <a href="#curve384" id="curve384">Domain Parameters for 384-Bit Curves</a></h1>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp384BN</li>
+  <li>p_b = 0xfffffffffffffffffff2a96823d5920d2a127e3f6fbca024c8fbe29531 892c79534f9d306328261550a7cabd7cccd10b</li>
+  <li>A = 0</li>
+  <li>B = 3</li>
+  <li>x = 1</li>
+  <li>y = 2</li>
+  <li>q = 0xfffffffffffffffffff2a96823d5920d2a127e3f6fbca023c8fbe2953189 2c795356487d8ac63e4f4db17384341a5775</li>
+  <li>h = 1</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.3.4"><a href="#rfc.section.4.3.4">4.3.4.</a> <a href="#curve512" id="curve512">Domain Parameters for 512-Bit Curves</a></h1>
+<p/>
+
+<ul class="empty">
+  <li>Curve-ID: Fp512BN</li>
+  <li>p_b = 0xfffffffffffffffffffffffffff9ec7f01c60ba1d8cb5307c0bbe3c111 b0ef455146cf1eacbe98b8e48c65deab236fel916a55ce5f4c6467b4eb280922ad ef33</li>
+  <li>A = 0</li>
+  <li>B = 3</li>
+  <li>x = 1</li>
+  <li>y = 2</li>
+  <li>q = 0xfffffffffffffffffffffffffff9ec7f01c60ba1d8cb5307c0bbe3c111b0 ef445146cf1eacbe98b8e48c65deab2679a34a10313e04f9a2b406a64a5f519a09 ed</li>
+  <li>h = 1</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.4.3.5"><a href="#rfc.section.4.3.5">4.3.5.</a> <a href="#differences_between_types" id="differences_between_types">Differences between D-Type and M-Type on ISO parameters</a></h1>
+<p id="rfc.section.4.3.5.p.1">Although ISO document is based on M-type, open source software are often based on D-type. We need to be aware of the differences.  Hence we also describe elliptic curves with D-type based on ISO document <a href="#ISO15946-5">[3]</a>.  The elliptic curve E(F_p) is defined by equation y^2 = x^3 + 3 and the sextic twist E'(F_{p^2}) is defined by y'^2 = x'^3 + 3/s, where F_{p^2} = F_p[X]/(X^2 + 1), F_{p^12} = F_{p^2}[X]/(X^6 - s), 1/s = -8 + 8 * i, i = X^2 + 1.  Detailed information on these domain parameters is given in <a href="#BN2006">[5]</a>.</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#oid" id="oid">Object Identifiers</a></h1>
+<p id="rfc.section.5.p.1">We need to define the following object identifiers.  Which organization is suitable for the allotment of these object identifiers? </p>
+<p/>
+
+<ul class="empty">
+  <li>Fp254BNa OBJECT IDENTIFIER ::= {TBD}</li>
+  <li>Fp254n2BNa OBJECT IDENTIFIER ::= {TBD}</li>
+  <li>Fp254BNb OBJECT IDENTIFIER ::= {TBD}</li>
+  <li>Fp254n2BNb OBJECT IDENTIFIER ::= {TBD}</li>
+  <li>Fp224BN OBJECT IDENTIFIER ::= {TBD}</li>
+  <li>Fp256BN OBJECT IDENTIFIER ::= {TBD}</li>
+  <li>Fp384BN OBJECT IDENTIFIER ::= {TBD}</li>
+  <li>Fp512BN OBJECT IDENTIFIER ::= {TBD}</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#Security" id="Security">Security Considerations</a></h1>
+<p id="rfc.section.6.p.1">Elliptic curves which are specified in this memo have hardness of the problems below and enough security margin against the attacks below. </p>
+<p id="rfc.section.6.p.2">Pairing-based cryptographic primitives are often based on the hardness of the following problems, so when the elliptic curves from this document are used in such schemes, these problems would apply.  (For details of problems, refer to section 2 of <a href="#Cheon06">[14]</a>.) </p>
+<p/>
+
+<ul class="empty">
+  <li>The elliptic curve discrete logarithm problem (ECDLP)</li>
+  <li>The elliptic curve computational Diffie-Hellman problem (ECDHP)</li>
+  <li>The bilinear Diffie-Hellman problem (BDHP)</li>
+  <li>The elliptic curve discrete logarithm problem with auxiliary inputs (ECDLP with auxiliary inputs)</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.6.p.4">Algorithms to efficiently solve the problems above, aside from special cases, are unknown.  Mainly, there are Pollard-rho algorithm <a href="#Pollard78">[16]</a> against point of an elliptic curve and Number Field Sieve method <a href="#JLSV06">[15]</a> against output of pairing as generic attacks against ellitpic curve with pairing.</p>
+<p id="rfc.section.6.p.5">The Smart, Semaev, and Sato-Araki algorithm <a href="#SA98">[17]</a>, and Cheon algorithm <a href="#Cheon06">[14]</a> are main algorithms which improve efficiency in specific cases.  The Smart-Semaev algorithm and Sato-Araki algorithm are polynotmial time algorithms against the ECDLP in the case where #E(F_{p}) equals to p.  These algorithms are independently proposed. Cheon algorithm <a href="#Cheon06">[14]</a> is against the ECDLP with auxiliary inputs.  It is prevented by satisfy the following condition, where n is the order of the curve.</p>
+<p/>
+
+<ul class="empty">
+  <li>there is no divisor d of n - 1 s.t. (log n)^2 &lt; d &lt; n^{1/2} and there is no divisor e of n + 1 s.t. (log n)^2 &lt; e &lt; n^{1/2}</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.6.p.7">Table 1 shows the security level of elliptic curves described in this memo (<a href="#BGMORT2010">[1]</a>, <a href="#AKLGL2011">[2]</a>).  Schemes based on the elliptic curves must be combined with cryptographic primitives which have similar or greater security level than the scheme.</p>
+<pre>
+	    |  Curve-ID  | Security Level (bits) |
+	    --------------------------------------
+        |  Fp224BN   |          112          |
+        |  Fp254BNa  |          128          |   
+        |  Fp254BNb  |          128          |   
+        |  Fp256BN   |          128          |   
+        |  Fp384BN   |          128          |   
+        |  Fp512BN   |          128          |   
+	   </pre>
+<p id="rfc.section.6.p.8">Table 1: security level of elliptic curve specified in this memo</p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> Acknowledgements</h1>
+<p id="rfc.section.7.p.1">This memo was inspired by the content and structure of <a href="#RFC5639">[18]</a>.</p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> Change log</h1>
+<p id="rfc.section.8.p.1">NOTE TO RFC EDITOR: Please remove this section in before final RFC publication.</p>
+<h1 id="rfc.references"><a href="#rfc.references">9.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">9.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="BGMORT2010">[1]</b>
+      </td>
+      <td class="top"><a>Beuchat, J.</a>, <a>Gonzalez-Diaz, J.</a>, <a>Mitsunari, S.</a>, <a>Okamoto, E.</a>, <a>Rodriguez-Henriquez, F.</a> and <a>T. Teruya</a>, "<a>High-Speed Software Implementation of the Optimal Ate Pairing over Barreto-Naehrig Curves</a>", Proceedings Lecture notes in computer sciences; Pairing-Based Cryptography --Pairing2010, 2010.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="AKLGL2011">[2]</b>
+      </td>
+      <td class="top"><a>Aranha, D.</a>, <a>Karabina, K.</a>, <a>Longa, P.</a>, <a>Gebotys, C.</a>, <a>Rodriguez-Henriquez, F.</a> and <a>J. Lopez</a>, "<a>Faster Explicit Formulas for Computing Pairings over Ordinary Curves</a>", Proceedings Lecture notes in computer sciences; EUROCRYPT --EUROCRYPT2011, 2011.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="ISO15946-5">[3]</b>
+      </td>
+      <td class="top"><a>International Organization for Standardization</a>, "<a>Information Technology - Security Techniques -- Cryptographic techniques based on elliptic curves .  Part 5: Elliptic curve generation</a>", ISO/IEC 15946-5, 2009.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[4]</b>
+      </td>
+      <td class="top"><a>Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", RFC 2119, March 1997.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">9.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="BN2006">[5]</b>
+      </td>
+      <td class="top"><a>Barreto, P.</a> and <a>M. Naehrig</a>, "<a>Pairing-Friendly Elliptic Curves of Prime Order</a>", Proceedings Lecture notes in computer sciences; 3897 in Selected Areas in Cryptgraphy -- SAC2005, 2006.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5091">[6]</b>
+      </td>
+      <td class="top"><a>Boyen, X.</a> and <a>L. Martin</a>, "<a href="http://tools.ietf.org/html/rfc5091">Identity-Based Cryptography Standard (IBCS) #1: Supersingular Curve Implementations of the BF and BB1 Cryptosystems</a>", RFC 5091, December 2007.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6508">[7]</b>
+      </td>
+      <td class="top"><a>Groves, M.</a>, "<a href="http://tools.ietf.org/html/rfc6508">Sakai-Kasahara Key Encryption (SAKKE)</a>", RFC 6508, February 2012.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.draft-irtf-cfrg-zss">[8]</b>
+      </td>
+      <td class="top"><a>Hitt, L.</a>, "<a href="http://tools.ietf.org/html/draft-irtf-cfrg-zss-02">ZSS Short Signature Scheme for Supersingular and BN Curves</a>", Internet-Draft draft-irtf-cfrg-zss-02, 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5409">[9]</b>
+      </td>
+      <td class="top"><a>Martin, L.</a> and <a>M. Schertler</a>, "<a href="http://tools.ietf.org/html/rfc5409">Using the Boneh-Franklin and Boneh-Boyen Identity-Based Encryption Algorithms with the Cryptographic Message Syntax (CMS)</a>", RFC 5409, January 2009.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6267">[10]</b>
+      </td>
+      <td class="top"><a>Cakulev, V.</a> and <a>G. Sundaram</a>, "<a href="http://tools.ietf.org/html/rfc6267">MIKEY-IBAKE: Identity-Based Authenticated Key Exchange (IBAKE) Mode of Key Distribution in Multimedia Internet KEYing (MIKEY)</a>", RFC 6267, June 2011.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6507">[11]</b>
+      </td>
+      <td class="top"><a>Groves, M.</a>, "<a href="http://tools.ietf.org/html/rfc6507">Elliptic Curve-Based Certificateless Signatures for Identity-Based Encryption (ECCSI)</a>", RFC 6507, February 2012.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6509">[12]</b>
+      </td>
+      <td class="top"><a>Groves, M.</a>, "<a href="http://tools.ietf.org/html/rfc6509">MIKEY-SAKKE: Sakai-Kasahara Key Encryption in Multimedia Internet KEYing (MIKEY)</a>", RFC 6509, February 2012.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6539">[13]</b>
+      </td>
+      <td class="top"><a>Cakulev, V.</a>, <a>Sundaram, G.</a> and <a>I. Broustis</a>, "<a href="http://tools.ietf.org/html/rfc6539">IBAKE: Identity-Based Authenticated Key Exchange</a>", RFC 6539, March 2012.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="Cheon06">[14]</b>
+      </td>
+      <td class="top"><a>Cheon, J.</a>, "<a>Security Analysis of the Strong Diffie-Hellman Problem</a>", Proceedings Lecture notes in computer sciences; 4004 in Advances in Cryptogoly -- Eurocrypt2006, 2006.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="JLSV06">[15]</b>
+      </td>
+      <td class="top"><a>Joux, A.</a>, <a>Lercier, R.</a>, <a>Smart, P.</a> and <a>F. Vercauteren</a>, "<a>The number field sieve in the medium prime case</a>", Proceedings Lecture notes in computer sciences; 4117 in Comput. Sci. -- CRYPTO2006, 2006.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="Pollard78">[16]</b>
+      </td>
+      <td class="top"><a>Pollard, J.</a>, "<a>Monte Carlo Methods for Index Computation ( mod p)</a>", Proceedings Mathematics of Computation, Vol.32, 1978.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="SA98">[17]</b>
+      </td>
+      <td class="top"><a>Satoh, T.</a> and <a>K. Araki</a>, "<a>Fermat quotients and the polynomial time discrete log algorithm for anomalous elliptic curves</a>", Proceedings Comm. Math. UnivSancti Pauli 47, 1998.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5639">[18]</b>
+      </td>
+      <td class="top"><a>Lochter, M.</a> and <a>J. Merkle</a>, <a href="http://tools.ietf.org/html/rfc5639">Elliptic Curve Cryptography (ECC) Brainpool Standard Curves and Curve Generation</a>", RFC 5639, March 2010.</td>
+    </tr>
+    <tr><td class="reference"><b id="TEPLA">[19]</b></td><td class="top"><a href="http://www.cipher.risk.tsukuba.ac.jp/tepla/index_e.html">University of Tsukuba Elliptic Curve and Pairing Library</a>", 2013.</td>, "</tr>
+    <tr>
+      <td class="reference">
+        <b id="relic">[20]</b>
+      </td>
+      <td class="top"><a>Aranha, D.</a> and <a>C. Gouv</a>, "<a href="https://code.google.com/p/relic-toolkit/">RELIC is an Efficient LIbrary for Cryptography</a>", 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="Aranha13">[21]</b>
+      </td>
+      <td class="top"><a>Aranha, D.</a>, <a>Barreto, P.</a>, <a>Longa, P.</a> and <a>J. Rocardini</a>, "<a>The Realm of the Pairings</a>",  SAC 2013, to appear, 2013.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Kohei Kasamatsu</span> 
+	  <span class="n hidden">
+		<span class="family-name">Kasamatsu</span>
+	  </span>
+	</span>
+	<span class="org vcardline">NTT Software Corporation</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:kasamatsu.kohei-at-po.ntts.co.jp">kasamatsu.kohei-at-po.ntts.co.jp</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Satoru Kanno</span> 
+	  <span class="n hidden">
+		<span class="family-name">Kanno</span>
+	  </span>
+	</span>
+	<span class="org vcardline">NTT Software Corporation</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:kanno.satoru-at-po.ntts.co.jp">kanno.satoru-at-po.ntts.co.jp</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Tetsutaro Kobayashi</span> 
+	  <span class="n hidden">
+		<span class="family-name">Kobayashi</span>
+	  </span>
+	</span>
+	<span class="org vcardline">NTT</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:kobayashi.tetsutaro-at-lab.ntt.co.jp">kobayashi.tetsutaro-at-lab.ntt.co.jp</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Yuto Kawahara</span> 
+	  <span class="n hidden">
+		<span class="family-name">Kawahara</span>
+	  </span>
+	</span>
+	<span class="org vcardline">NTT</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:kawahara.yuto-at-lab.ntt.co.jp">kawahara.yuto-at-lab.ntt.co.jp</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
